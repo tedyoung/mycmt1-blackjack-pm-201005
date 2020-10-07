@@ -3,15 +3,8 @@ package com.jitterted.ebp.blackjack;
 public enum Suit {
   HEARTS("♥", true),
   CLUBS("♣", false),
-  DIAMONDS( "♦", true),
+  DIAMONDS("♦", true),
   SPADES("♠", false);
-
-//  enum SuitColor {
-//    BLUE,
-//    BLACK,
-//    RED,
-//    GREEN
-//  }
 
   private final String symbol;
   private final boolean isRed;
