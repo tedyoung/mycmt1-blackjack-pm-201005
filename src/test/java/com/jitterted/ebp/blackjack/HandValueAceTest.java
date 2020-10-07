@@ -9,10 +9,18 @@ public class HandValueAceTest {
   private static final Suit DUMMY_SUIT = Suit.HEARTS;
 
   @Test
-  public void handWithOneAceTwoCardsIsValuedAt11() throws Exception {
-    Hand hand = createHand("A", "5");
+  public void handWithOneAceTwoCardsAceIsValuedAt11() throws Exception {
+    Hand hand = createHand("A", "9");
 
-    assertThat(hand.valueEquals(11 + 5))
+    assertThat(hand.valueEquals(11 + 9))
+        .isTrue();
+  }
+
+  @Test
+  public void handWithOneAceAndOtherCardsAddsTo10AceIsValuedAt11() throws Exception {
+    Hand hand = createHand("A", "10");
+
+    assertThat(hand.valueEquals(11 + 10))
         .isTrue();
   }
 
