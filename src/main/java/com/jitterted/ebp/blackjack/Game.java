@@ -4,7 +4,6 @@ import org.fusesource.jansi.Ansi;
 
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
@@ -134,14 +133,14 @@ public class Game {
   private void displayGameState() {
     System.out.print(ansi().eraseScreen().cursor(1, 1));
     System.out.println("Dealer has: ");
-    System.out.println(dealerHand.getCards().get(0).display()); // first card is Face Up
+    System.out.println(dealerHand.firstCardFaceUp());
 
     // second card is the hole card, which is hidden
     displayBackOfCard();
 
     System.out.println();
     System.out.println("Player has: ");
-    displayHand(playerHand.getCards());
+    playerHand.displayHand();
     System.out.println(" (" + playerHand.valueOf() + ")");
   }
 
@@ -159,22 +158,16 @@ public class Game {
             .a("└─────────┘"));
   }
 
-  private void displayHand(List<Card> hand) {
-    System.out.println(hand.stream()
-                           .map(Card::display)
-                           .collect(Collectors.joining(
-                               ansi().cursorUp(6).cursorRight(1).toString())));
-  }
-
   private void displayFinalGameState() {
     System.out.print(ansi().eraseScreen().cursor(1, 1));
     System.out.println("Dealer has: ");
-    displayHand(dealerHand.getCards());
+    dealerHand.displayHand();
     System.out.println(" (" + dealerHand.valueOf() + ")");
 
     System.out.println();
     System.out.println("Player has: ");
-    displayHand(playerHand.getCards());
+    playerHand.displayHand();
     System.out.println(" (" + playerHand.valueOf() + ")");
   }
+
 }

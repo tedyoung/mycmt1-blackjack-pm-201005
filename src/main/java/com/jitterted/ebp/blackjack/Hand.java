@@ -2,28 +2,25 @@ package com.jitterted.ebp.blackjack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.fusesource.jansi.Ansi.ansi;
 
 public class Hand {
   private final List<Card> cards = new ArrayList<>();
-
-  // GOAL (Scaffolding) -> Get rid of this method
-  public List<Card> getCards() {
-    return cards;
-  }
 
   public void add(Card card) {
     cards.add(card);
   }
 
   int valueOf() {
-    List<Card> hand = getCards();
-    int handValue = hand
+    int handValue = cards
         .stream()
         .mapToInt(Card::rankValue)
         .sum();
 
     // does the hand contain at least 1 Ace?
-    boolean hasAce = hand
+    boolean hasAce = cards
         .stream()
         .anyMatch(card -> card.rankValue() == 1);
 
@@ -33,5 +30,16 @@ public class Hand {
     }
 
     return handValue;
+  }
+
+  String firstCardFaceUp() {
+    return cards.get(0).display();
+  }
+
+  void displayHand() {
+    System.out.println(cards.stream()
+                            .map(Card::display)
+                            .collect(Collectors.joining(
+                               ansi().cursorUp(6).cursorRight(1).toString())));
   }
 }
