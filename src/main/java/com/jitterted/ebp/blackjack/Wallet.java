@@ -19,4 +19,23 @@ public class Wallet {
   public int balance() {
     return balance;
   }
+
+  public void bet(int amount) {
+    requireValidAmount(amount);
+    requireSufficientBalanceOf(amount);
+    balance -= amount;
+  }
+
+  private void requireValidAmount(int amount) {
+    if (amount < 0) {
+      throw new IllegalArgumentException();
+    }
+  }
+
+  private void requireSufficientBalanceOf(int amount) {
+    if (amount > balance) {
+      throw new IllegalArgumentException();
+    }
+  }
+
 }

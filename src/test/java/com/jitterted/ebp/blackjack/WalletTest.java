@@ -53,4 +53,62 @@ public class WalletTest {
         .isEqualTo(12 + 17);
   }
 
+  @Test
+  public void bet37ReducesBalanceBy37() throws Exception {
+    // GIVEN a wallet with 58
+    Wallet wallet = new Wallet();
+    wallet.addMoney(58);
+
+    // WHEN I bet 37
+    wallet.bet(37);
+
+    // THEN balance is 21
+    assertThat(wallet.balance())
+        .isEqualTo(58 - 37);
+  }
+
+  @Test
+  public void bet45AndBet23ReducesBalanceBy68() throws Exception {
+    Wallet wallet = new Wallet();
+    wallet.addMoney(69);
+
+    wallet.bet(45);
+    wallet.bet(23);
+
+    assertThat(wallet.balance())
+        .isEqualTo(69 - 45 - 23);
+  }
+
+  @Test
+  public void walletWith72AndBet72IsEmpty() throws Exception {
+    Wallet wallet = new Wallet();
+    wallet.addMoney(72);
+
+    wallet.bet(72);
+
+    assertThat(wallet.isEmpty())
+        .isTrue();
+  }
+
+  @Test
+  public void betMoreThanBalanceThrowsException() throws Exception {
+    Wallet wallet = new Wallet();
+    wallet.addMoney(5);
+
+    assertThatThrownBy(() -> {
+      wallet.bet(6);
+    })
+        .isInstanceOf(IllegalArgumentException.class);
+  }
+
+  @Test
+  public void betLessThanZeroThrowsException() throws Exception {
+    Wallet wallet = new Wallet();
+
+    assertThatThrownBy(() -> {
+      wallet.bet(-1);
+    })
+        .isInstanceOf(IllegalArgumentException.class);
+  }
+
 }
